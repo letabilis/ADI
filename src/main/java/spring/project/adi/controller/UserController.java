@@ -37,8 +37,8 @@ public class UserController {
     }
     
     @GetMapping
-    public ResponseEntity<Optional<GetUserDTO>> getUserById(@RequestParam UUID userId) {
-        var userDTO = this.userService.getUserById(userId);
+    public ResponseEntity<Optional<GetUserDTO>> getUserById(@RequestParam UUID id) {
+        var userDTO = this.userService.getUserById(id);
         
         return userDTO.isPresent() ? ResponseEntity.ok(userDTO) : ResponseEntity.notFound().build();
     }
