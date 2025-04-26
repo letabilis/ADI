@@ -35,4 +35,8 @@ public class UserService {
     public List<GetUserDTO> listUsers(){
         return this.userMapper.toDTOList(this.userRepository.findAll());
     }
+
+    public void deleteUserById(UUID userId) {
+        this.userRepository.deleteById(userId);
+    }
 }
