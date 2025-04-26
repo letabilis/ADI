@@ -40,11 +40,7 @@ public class UserController {
     public ResponseEntity<Optional<GetUserDTO>> getUserById(@RequestParam UUID userId) {
         var userDTO = this.userService.getUserById(userId);
         
-        if (userDTO.isPresent()) {
-            return ResponseEntity.ok(userDTO);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return userDTO.isPresent() ? ResponseEntity.ok(userDTO) : ResponseEntity.notFound().build();
     }
     
 }
