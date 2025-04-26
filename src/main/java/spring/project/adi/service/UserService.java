@@ -6,6 +6,7 @@ import spring.project.adi.mapper.UserMapper;
 import spring.project.adi.dto.CreateUserDTO;
 import spring.project.adi.dto.GetUserDTO;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,5 +30,9 @@ public class UserService {
         return userRepository
         .findById(userId)
         .map(this.userMapper::toDTO);  
+    }
+
+    public List<GetUserDTO> listUsers(){
+        return this.userMapper.toDTOList(this.userRepository.findAll());
     }
 }
