@@ -56,7 +56,6 @@
     <build>
         <plugins>
 
-            <!-- Plugin para compilar e processar anotações como @Mapper -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -74,7 +73,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin para empacotar a aplicação Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
