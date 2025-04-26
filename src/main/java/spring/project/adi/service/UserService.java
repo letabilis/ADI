@@ -37,6 +37,8 @@ public class UserService {
     }
 
     public void deleteUserById(UUID userId) {
-        this.userRepository.deleteById(userId);
+        if (this.userRepository.existsById(userId)) {
+            this.userRepository.deleteById(userId);
+        }
     }
 }
