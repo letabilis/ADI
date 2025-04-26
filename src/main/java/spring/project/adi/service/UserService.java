@@ -4,8 +4,9 @@ import org.springframework.stereotype.Service;
 import spring.project.adi.repository.UserRepository;
 import spring.project.adi.mapper.UserMapper;
 import spring.project.adi.dto.CreateUserDTO;
+import spring.project.adi.dto.GetUserDTO;
 
-
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,5 +23,11 @@ public class UserService {
         var userEntity = this.userMapper.toEntity(createUserDTO);
         var savedUser = this.userRepository.save(userEntity);
         return savedUser.getId();
+    }
+
+    public Optional<GetUserDTO> getUserById(UUID userId) {
+        return userRepository
+        .findById(userId)
+        .map(this.userMapper::toDTO);  
     }
 }
