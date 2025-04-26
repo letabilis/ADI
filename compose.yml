@@ -1,6 +1,6 @@
 services:
   mysql:
-    container_name: 'guide-mysql'
+    container_name: 'adi-mysql'
     image: 'mysql:latest'
     environment:
       - 'MYSQL_DATABASE=mydatabase'
