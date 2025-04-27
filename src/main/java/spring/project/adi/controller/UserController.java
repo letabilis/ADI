@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import spring.project.adi.dto.CreateUserDTO;
 import spring.project.adi.dto.GetUserDTO;
+import spring.project.adi.dto.UpdateUserDTO;
 import spring.project.adi.model.User;
 import spring.project.adi.service.UserService;
 
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -52,6 +55,12 @@ public class UserController {
         var userDTO = this.userService.getUserById(userId);
         
         return userDTO.isPresent() ? ResponseEntity.ok(userDTO) : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<Void> updateUserById(@PathVariable("userId") UUID userId, @RequestBody UpdateUserDTO updateUserDTO) {
+        this.userService.updateUserById(userId, updateUserDTO); 
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{userId}")
