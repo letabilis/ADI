@@ -5,6 +5,7 @@ import spring.project.adi.repository.UserRepository;
 import spring.project.adi.mapper.UserMapper;
 import spring.project.adi.dto.CreateUserDTO;
 import spring.project.adi.dto.GetUserDTO;
+import spring.project.adi.dto.UpdateUserDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,27 @@ public class UserService {
     public void deleteUserById(UUID userId) {
         if (this.userRepository.existsById(userId)) {
             this.userRepository.deleteById(userId);
+        }
+    }
+
+    public void updateUserById(UUID userId, UpdateUserDTO updateUserDTO) {
+
+        var userEntity = this.userRepository.findById(userId);
+        if (userEntity.isPresent()) {
+            var user = userEntity.get();
+            
+            var name = updateUserDTO.name();
+            var password = updateUserDTO.password();
+
+            if (name != null) {
+                user.setName(updateUserDTO.name());
+            }
+
+            if (password != null) {
+                user.setPassword(updateUserDTO.password());
+            }
+
+            this.userRepository.save(user);
         }
     }
 }
