@@ -3,11 +3,13 @@ package spring.project.adi.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
 import java.time.Instant;
 import java.util.UUID;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -41,6 +43,9 @@ public class UserServiceTest {
 
     @Captor
     private ArgumentCaptor<User> userArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<UUID> uuidArgumentCaptor;
 
 
     @Nested
@@ -85,7 +90,7 @@ public class UserServiceTest {
 
             doThrow(new RuntimeException()).when(userRepository).save(userArgumentCaptor.capture());
 
-            var input = new CreateUserDTO(null, "email@email.com", "123");
+            var input = new CreateUserDTO("name", "email@email.com", "123");
 
             // Act && Assert
             assertThrows(RuntimeException.class, () -> userService.createUser(input));
@@ -96,7 +101,46 @@ public class UserServiceTest {
     class getUserById {
 
         @Test
-        void testName() {
+        void shouldSucessfullyGetUserByIdWhenOptionalIsPresent() {
+            // Arrange
+            var userSample = new User(
+                UUID.randomUUID(), 
+                "name", 
+                "email", 
+                "password", 
+                Instant.now(), 
+                Instant.now()
+            );
+            doReturn(Optional.of(userSample)).when(userRepository).findById(uuidArgumentCaptor.capture());
+
+            var input = userSample.getId();
+
+            // Act
+
+            var output = userService.getUserById(input);
+
+            // Assert
+
+            assertTrue(output.isPresent());
+            assertEquals(userSample.getId(), userArgumentCaptor.getValue());
+
+        }
+        void shouldUnsucessfullyGetUserByIdWhenOptionalIsEmpty() {
+            // Arrange
+          
+            var input = UUID.randomUUID();
+
+            doReturn(Optional.empty()).when(userRepository).findById(uuidArgumentCaptor.capture());
+
+
+            // Act
+
+            var output = userService.getUserById(input);
+
+            // Assert
+            
+            assertTrue(output.isEmpty());
+            assertEquals(input, userArgumentCaptor.getValue());
 
         }
     }
