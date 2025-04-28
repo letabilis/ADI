@@ -1,5 +1,6 @@
 package spring.project.adi.service;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -184,6 +185,22 @@ public class UserServiceTest {
             assertTrue(output.containsAll(userMapper.toDTOList(userList)));
         }
         
+        @Test
+        void shouldRetrieveEmptyUserList() {
+            // Arrange
+
+            List<User> emptyUserList = new ArrayList<>();
+            
+            doReturn(emptyUserList).when(userRepository).findAll();
+
+
+            // Act
+            var output = userService.listUsers();
+
+            // Assert
+            
+            assertEquals(output, emptyUserList);
+        }
     }
 
 
