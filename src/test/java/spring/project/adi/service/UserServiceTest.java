@@ -10,6 +10,9 @@ import static org.mockito.Mockito.doThrow;
 import java.time.Instant;
 import java.util.UUID;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -150,9 +153,37 @@ public class UserServiceTest {
     class listUsers {
 
         @Test
-        void testName() {
+        void shouldSucessfullyRetrieveUserList() {
+            // Arrange
+            List<User> userList = new ArrayList<>(Arrays.asList(
+                new User(
+                    UUID.randomUUID(), 
+                    "nameOne", 
+                    "emailOne@email.com", 
+                    "987", 
+                    Instant.now(), 
+                    null
+                ), 
+                new User(
+                UUID.randomUUID(), 
+                "nameTwo",
+                 "emailTwo@email.com", 
+                 "654", 
+                 Instant.now(), 
+                 null
+                 )
+            )); 
+                
+            doReturn(userList).when(userRepository).findAll();
 
+
+            // Act
+            var output = userService.listUsers();
+
+            // Assert
+            assertTrue(output.containsAll(userMapper.toDTOList(userList)));
         }
+        
     }
 
 
