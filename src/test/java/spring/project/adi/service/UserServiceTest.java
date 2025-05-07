@@ -1,19 +1,19 @@
 package spring.project.adi.service;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
 import java.time.Instant;
-import java.util.UUID;
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -208,10 +208,22 @@ public class UserServiceTest {
     class deleteUserById {
 
         @Test
-        void testName() {
+        void shouldSucessfullyDeleteUserById () {
+            // Arrange
+            var input = UUID.randomUUID();
 
+            doNothing().when(userRepository).deleteById(input));
+            
+            // Act
+
+            userService.deleteUserById(input);
+            
+            // Assert
+
+           
+            
         }
-
+        
     }
 
     @Nested
